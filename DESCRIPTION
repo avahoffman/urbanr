@@ -1,0 +1,11 @@
+Package: urbanr
+Title: Gather Common Measurements for Urban Environments
+Version: 0.0.0.9000
+Authors@R: 
+    person("Ava", "Hoffman", , "avamariehoffman@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-1833-4397"))
+Description: Get measurements for GPS coordinates in urban environments.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
