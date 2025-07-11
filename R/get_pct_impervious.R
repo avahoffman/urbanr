@@ -31,6 +31,15 @@ download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C
 }
 
 
+#' Title
+#'
+#' @param latlon
+#' @param edition
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 get_pct_impervious <- function(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif"){
   data_dir <- paste0("urbanr_data")
   file_dir <- paste0(data_dir, "/", edition)
