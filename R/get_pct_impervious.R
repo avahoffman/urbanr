@@ -108,6 +108,8 @@ get_pct_impervious <- function(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V
   # Get the necessary data
   # TODO Error out if not correct dataset, or just look for a tif file
   download_or_check_impervious(edition = edition)
+  cli::cli_alert(cli::col_cyan("Using data from: ", paste0(edition), "."))
+
   r <- terra::rast(file_dir)
   the_crs <- terra::crs(r)
 
@@ -161,4 +163,16 @@ lat_lon_dataframe_alert <- function() {
       "Please ensure the dataframe contains only two columns `lat` and `lon` corresponding to the latitude and longitude, respectively."
     )
   ))
+}
+
+
+make_test_data <- function() {
+  file_dir <- "urbanr_data/Annual_NLCD_FctImp_2024_CU_C1V1.tif"
+  r <- terra::rast(file_dir)
+  the_crs <- terra::crs(r)
+  limited_extent <- terra::ext(c(-76.635277, -76.635270, 39.458686, 39.458690))
+  limited_extent <- terra::project(limited_extent, from = "+proj=longlat", to = the_crs)
+  cropped_r <- terra::crop(r, limited_extent)
+
+  terra::writeRaster(cropped_r, filename = file.path("test.tif"))
 }
