@@ -24,9 +24,6 @@ This is a basic example to get percent impervious values from latitude and longi
 ``` r
 library(urbanr)
 
-# Single point query
-get_pct_impervious(c(39.458686, -76.635277))
-
 # Batch query with multiple points
 coords_df <- data.frame(
   lat = c(39.458686, 39.333241),
