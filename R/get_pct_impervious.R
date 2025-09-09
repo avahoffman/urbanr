@@ -68,20 +68,18 @@ download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C
 #' Extract percentage impervious surface cover from NLCD data
 #'
 #' This function extracts impervious surface percentages from NLCD raster data for specific
-#' geographic locations. It supports both point-level queries and batch processing through
-#' data frames.
+#' geographic locations.
 #'
 #' @details
 #' The function returns a data frame containing the coordinate pairs and their corresponding
-#' impervious surface percentages. For single point queries, it returns a data frame with three
-#' columns (lat, lon, and the percentage). For batch queries, it returns a data frame with
+#' impervious surface percentages. It returns a data frame with
 #' multiple rows, each representing a location and its corresponding impervious surface percentage.
 #'
-#' @param latlon Either a numeric vector of length 2 (latitude, longitude) or a data frame
-#'               with columns named 'lat' and 'lon'. Coordinates should be in decimal degrees
-#'               format.
+#' @param latlon A data frame with columns named 'lat' and 'lon'. Coordinates should be
+#'               in decimal degrees format.
 #' @param edition Character string specifying the NLCD data edition to use. Defaults to
 #'                "Annual_NLCD_FctImp_2024_CU_C1V1.tif".
+#' @param data_dir Character string specifying the directory where the edition is stored. For testing.
 #'
 #' @importFrom cli cli_alert col_cyan
 #' @importFrom terra rast vect extract crs project
@@ -90,9 +88,6 @@ download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C
 #'         percentages.
 #'
 #' @examples
-#' # Single point query
-#' get_pct_impervious(c(39.458686, -76.635277))
-#'
 #' # Batch query with multiple points
 #' coords_df <- data.frame(
 #'   lat = c(39.458686, 39.333241),
@@ -101,9 +96,9 @@ download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C
 #' get_pct_impervious(coords_df)
 #'
 #' @export
-get_pct_impervious <- function(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif") {
-  data_dir <- paste0("urbanr_data")
-  file_dir <- paste0(data_dir, "/", edition)
+get_pct_impervious <- function(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif", data_dir = "urbanr_data") {
+  #data_dir <- paste0("urbanr_data")
+  file_dir <- paste0(here::here(), "/", data_dir, "/", edition)
 
   # Get the necessary data
   # TODO Error out if not correct dataset, or just look for a tif file
@@ -112,44 +107,23 @@ get_pct_impervious <- function(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V
 
   r <- terra::rast(file_dir)
   the_crs <- terra::crs(r)
-
+  
   # Confirm data is formatted correctly
-  if (is.numeric(latlon) & length(latlon) == 2) {
-    # TODO: Checks for realistic ranges for values so as not to swap lat and long
-    vals <- data.frame(lon = latlon[2], lat = latlon[1])
-    vals_terra <- terra::vect(vals, crs = "+proj=longlat", keepgeom = T)
-    extracted_vals <- terra::extract(r, terra::project(vals_terra, the_crs))
-    out <- cbind(vals, extracted_vals[, 2])
-    colnames(out)[3] <- colnames(extracted_vals[2])
-    return(out)
-
-  } else if (is.data.frame(latlon)) {
-    # Confirm only 2 columns for the input
-    if (ncol(latlon) == 2) {
-      # Confirm column names for terra
-      if ("lat" %in% colnames(latlon) &
-          "lon" %in% colnames(latlon)) {
-        vals <- latlon
-        vals_terra <- terra::vect(vals, crs = "+proj=longlat", keepgeom = T)
-        extracted_vals <- terra::extract(r, terra::project(vals_terra, the_crs))
-        out <- cbind(vals, extracted_vals[, 2])
-        colnames(out)[3] <- colnames(extracted_vals[2])
-        return(out)
-
-      } else {
-        lat_lon_dataframe_alert()
-      }
-
+  if (is.data.frame(latlon)) {
+    # Confirm column names for terra
+    if ("lat" %in% colnames(latlon) &
+        "lon" %in% colnames(latlon)) {
+      vals <- data.frame(lon = latlon$lon, lat = latlon$lat)
+      vals_terra <- terra::vect(vals, crs = "+proj=longlat", keepgeom = T)
+      extracted_vals <- terra::extract(r, terra::project(vals_terra, the_crs))
+      out <- cbind(vals, extracted_vals[, 2])
+      colnames(out)[3] <- colnames(extracted_vals[2])
+      return(out)   
     } else {
       lat_lon_dataframe_alert()
     }
-
   } else {
-    cli::cli_alert(
-      cli::col_cyan(
-        "Input must be either a vector of length 2 e.g., `c(39.458686, -76.635277)` OR a dataframe containing two columns with the colnames `lat` and `lon`."
-      )
-    )
+    lat_lon_dataframe_alert()
   }
 }
 
@@ -160,7 +134,7 @@ get_pct_impervious <- function(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V
 lat_lon_dataframe_alert <- function() {
   return(cli::cli_alert(
     cli::col_cyan(
-      "Please ensure the dataframe contains only two columns `lat` and `lon` corresponding to the latitude and longitude, respectively."
+      "Please ensure the input format is a dataframe that contains two columns `lat` and `lon` corresponding to the latitude and longitude, respectively."
     )
   ))
 }
@@ -174,5 +148,14 @@ make_test_data <- function() {
   limited_extent <- terra::project(limited_extent, from = "+proj=longlat", to = the_crs)
   cropped_r <- terra::crop(r, limited_extent)
 
-  terra::writeRaster(cropped_r, filename = file.path("test.tif"))
+  terra::writeRaster(cropped_r, filename = file.path("test_2024.tif"))
+  
+  file_dir <- "urbanr_data/Annual_NLCD_FctImp_1988_CU_C1V1.tif"
+  r <- terra::rast(file_dir)
+  the_crs <- terra::crs(r)
+  limited_extent <- terra::ext(c(-76.635277, -76.635270, 39.458686, 39.458690))
+  limited_extent <- terra::project(limited_extent, from = "+proj=longlat", to = the_crs)
+  cropped_r <- terra::crop(r, limited_extent)
+  
+  terra::writeRaster(cropped_r, filename = file.path("test_1988.tif"))
 }

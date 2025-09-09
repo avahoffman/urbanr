@@ -4,15 +4,20 @@
 \alias{get_pct_impervious}
 \title{Extract percentage impervious surface cover from NLCD data}
 \usage{
-get_pct_impervious(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif")
+get_pct_impervious(
+  latlon,
+  edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif",
+  data_dir = "urbanr_data"
+)
 }
 \arguments{
-\item{latlon}{Either a numeric vector of length 2 (latitude, longitude) or a data frame
-with columns named 'lat' and 'lon'. Coordinates should be in decimal degrees
-format.}
+\item{latlon}{A data frame with columns named 'lat' and 'lon'. Coordinates should be
+in decimal degrees format.}
 
 \item{edition}{Character string specifying the NLCD data edition to use. Defaults to
 "Annual_NLCD_FctImp_2024_CU_C1V1.tif".}
+
+\item{data_dir}{Character string specifying the directory where the edition is stored. For testing.}
 }
 \value{
 A data frame containing coordinate pairs and their corresponding impervious surface
@@ -20,19 +25,14 @@ percentages.
 }
 \description{
 This function extracts impervious surface percentages from NLCD raster data for specific
-geographic locations. It supports both point-level queries and batch processing through
-data frames.
+geographic locations.
 }
 \details{
 The function returns a data frame containing the coordinate pairs and their corresponding
-impervious surface percentages. For single point queries, it returns a data frame with three
-columns (lat, lon, and the percentage). For batch queries, it returns a data frame with
+impervious surface percentages. It returns a data frame with
 multiple rows, each representing a location and its corresponding impervious surface percentage.
 }
 \examples{
-# Single point query
-get_pct_impervious(c(39.458686, -76.635277))
-
 # Batch query with multiple points
 coords_df <- data.frame(
   lat = c(39.458686, 39.333241),
