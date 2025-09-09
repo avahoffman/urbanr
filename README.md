@@ -32,3 +32,4 @@ coords_df <- data.frame(
 get_pct_impervious(coords_df)
 ```
 
+See an example of implementation at: https://github.com/BioDIGS/site_metadata_environment.
