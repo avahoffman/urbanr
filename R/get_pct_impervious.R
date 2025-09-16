@@ -1,6 +1,6 @@
-#' Download or check existence of impervious surface raster data
+#' Check existence of impervious surface raster data
 #'
-#' This function manages the download and organization of NLCD impervious surface raster data.
+#' This function helps the user find the appropriate data from NLCD impervious surface raster data.
 #' It creates the necessary directory structure and provides guidance if the data is missing.
 #'
 #' @details
@@ -25,7 +25,8 @@
 #'
 #' @returns Function produces no output if ready to proceed; produces messaging if data is not available to the user.
 #'
-#' @examples download_or_check_impervious()
+#' @examplesIf interactive()
+#' download_or_check_impervious()
 download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif") {
   # Set up the directory structure
   data_dir <- paste0("urbanr_data")
@@ -88,17 +89,18 @@ download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C
 #'         percentages.
 #'
 #' @examples
+#' \dontrun{ 
 #' # Batch query with multiple points
 #' coords_df <- data.frame(
 #'   lat = c(39.458686, 39.333241),
 #'   lon = c(-76.635277, -76.587142)
 #' )
 #' get_pct_impervious(coords_df)
-#'
+#' }
 #' @export
 get_pct_impervious <- function(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif", data_dir = "urbanr_data") {
   #data_dir <- paste0("urbanr_data")
-  file_dir <- paste0(here::here(), "/", data_dir, "/", edition)
+  file_dir <- paste0(data_dir, "/", edition)
 
   # Get the necessary data
   # TODO Error out if not correct dataset, or just look for a tif file
@@ -148,7 +150,7 @@ make_test_data <- function() {
   limited_extent <- terra::project(limited_extent, from = "+proj=longlat", to = the_crs)
   cropped_r <- terra::crop(r, limited_extent)
 
-  terra::writeRaster(cropped_r, filename = file.path("test_2024.tif"))
+  terra::writeRaster(cropped_r, filename = file.path("data/test_2024.tif"), overwrite=TRUE)
   
   file_dir <- "urbanr_data/Annual_NLCD_FctImp_1988_CU_C1V1.tif"
   r <- terra::rast(file_dir)
@@ -157,5 +159,5 @@ make_test_data <- function() {
   limited_extent <- terra::project(limited_extent, from = "+proj=longlat", to = the_crs)
   cropped_r <- terra::crop(r, limited_extent)
   
-  terra::writeRaster(cropped_r, filename = file.path("test_1988.tif"))
+  terra::writeRaster(cropped_r, filename = file.path("data/test_1988.tif"), overwrite=TRUE)
 }
