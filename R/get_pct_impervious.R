@@ -20,14 +20,17 @@
 #'
 #' @param edition Character string specifying the NLCD data edition to use. Defaults to
 #' "Annual_NLCD_FctImp_2024_CU_C1V1.tif".
+#' @param return_status Boolean where `FALSE` returns nothing, and `TRUE` returns the staus of the data. `TRUE` 
+#' is returned if appropriate data is found.
 #'
 #' @importFrom cli cli_alert col_cyan style_hyperlink
 #'
 #' @returns Function produces no output if ready to proceed; produces messaging if data is not available to the user.
 #'
-#' @examplesIf interactive()
+#' @examples
 #' download_or_check_impervious()
-download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif") {
+#' @export
+download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif", return_status = FALSE) {
   # Set up the directory structure
   data_dir <- paste0("urbanr_data")
   file_dir <- paste0(data_dir, "/", edition)
@@ -62,7 +65,10 @@ download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C
         ")."
       )
     )
-  }
+    if(return_status) return(FALSE)
+  } else {
+    if(return_status) return(TRUE)
+  } 
 }
 
 
@@ -88,15 +94,13 @@ download_or_check_impervious <- function(edition = "Annual_NLCD_FctImp_2024_CU_C
 #' @returns A data frame containing coordinate pairs and their corresponding impervious surface
 #'         percentages.
 #'
-#' @examples
-#' \dontrun{ 
+#' @examplesIf download_or_check_impervious(return_status = TRUE)
 #' # Batch query with multiple points
 #' coords_df <- data.frame(
 #'   lat = c(39.458686, 39.333241),
 #'   lon = c(-76.635277, -76.587142)
 #' )
 #' get_pct_impervious(coords_df)
-#' }
 #' @export
 get_pct_impervious <- function(latlon, edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif", data_dir = "urbanr_data") {
   #data_dir <- paste0("urbanr_data")

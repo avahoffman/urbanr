@@ -33,12 +33,12 @@ impervious surface percentages. It returns a data frame with
 multiple rows, each representing a location and its corresponding impervious surface percentage.
 }
 \examples{
-\dontrun{ 
+\dontshow{if (download_or_check_impervious(return_status = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Batch query with multiple points
 coords_df <- data.frame(
   lat = c(39.458686, 39.333241),
   lon = c(-76.635277, -76.587142)
 )
 get_pct_impervious(coords_df)
-}
+\dontshow{\}) # examplesIf}
 }

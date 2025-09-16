@@ -4,11 +4,17 @@
 \alias{download_or_check_impervious}
 \title{Check existence of impervious surface raster data}
 \usage{
-download_or_check_impervious(edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif")
+download_or_check_impervious(
+  edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif",
+  return_status = FALSE
+)
 }
 \arguments{
 \item{edition}{Character string specifying the NLCD data edition to use. Defaults to
 "Annual_NLCD_FctImp_2024_CU_C1V1.tif".}
+
+\item{return_status}{Boolean where \code{FALSE} returns nothing, and \code{TRUE} returns the staus of the data. \code{TRUE}
+is returned if appropriate data is found.}
 }
 \value{
 Function produces no output if ready to proceed; produces messaging if data is not available to the user.
@@ -33,7 +39,5 @@ In the event that the data is no longer available from NLCD, the 2024 snapshot
 can also be found on \href{https://figshare.com/articles/dataset/urbanr_data_Annual_NLCD_FctImp_2024/29549666?file=56194733}{Figshare}.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 download_or_check_impervious()
-\dontshow{\}) # examplesIf}
 }

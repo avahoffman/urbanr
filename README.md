@@ -49,6 +49,8 @@ See an example of implementation at:
 <!-- document() -->
 <!-- load_all() -->
 <!-- build_readme() -->
+<!-- test_coverage() -->
+<!-- test_coverage_active_file() -->
 <!-- urlchecker::url_check() -->
 <!-- test() -->
 <!-- check() -->
