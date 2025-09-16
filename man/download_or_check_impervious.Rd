@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_pct_impervious.R
 \name{download_or_check_impervious}
 \alias{download_or_check_impervious}
-\title{Download or check existence of impervious surface raster data}
+\title{Check existence of impervious surface raster data}
 \usage{
 download_or_check_impervious(edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif")
 }
@@ -14,7 +14,7 @@ download_or_check_impervious(edition = "Annual_NLCD_FctImp_2024_CU_C1V1.tif")
 Function produces no output if ready to proceed; produces messaging if data is not available to the user.
 }
 \description{
-This function manages the download and organization of NLCD impervious surface raster data.
+This function helps the user find the appropriate data from NLCD impervious surface raster data.
 It creates the necessary directory structure and provides guidance if the data is missing.
 }
 \details{
@@ -33,5 +33,7 @@ In the event that the data is no longer available from NLCD, the 2024 snapshot
 can also be found on \href{https://figshare.com/articles/dataset/urbanr_data_Annual_NLCD_FctImp_2024/29549666?file=56194733}{Figshare}.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 download_or_check_impervious()
+\dontshow{\}) # examplesIf}
 }
