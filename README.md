@@ -6,6 +6,8 @@
 
 <!-- badges: start -->
 
+[![Codecov test
+coverage](https://codecov.io/gh/r-lib/withr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/withr?branch=main)
 [![R-CMD-check](https://github.com/avahoffman/urbanr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/avahoffman/urbanr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 

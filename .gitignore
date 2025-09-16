@@ -51,3 +51,4 @@ rsconnect/
 
 # Data dir - checks for this otherwise downloads
 urbanr_data/*
+docs
