@@ -1,5 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/avahoffman/urbanr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/avahoffman/urbanr/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 <!-- See https://github.com/r-lib/withr/blob/main/README.Rmd for better quality -->
 
 # urbanr
