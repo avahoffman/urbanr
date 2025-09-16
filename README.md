@@ -1,25 +1,33 @@
 
-# urbanr
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- See https://github.com/r-lib/withr/blob/main/README.Rmd for better quality -->
 
-<!-- badges: start -->
-<!-- badges: end -->
+## urbanr
+
+## Overview
 
 The goal of urbanr is to gather data related to an urban sciences study.
 
 ## Installation
 
-You can install the development version of urbanr from [GitHub](https://github.com/) with:
+You can install the development version of urbanr from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("avahoffman/urbanr")
 ```
 
-You will need to download data from [NLCD](https://www.mrlc.gov/data?f%5B0%5D=category%3AFractional%20Impervious%20Surface/) or from our backup version on [Figshare](https://figshare.com/articles/dataset/urbanr_data_Annual_NLCD_FctImp_2024/29549666?file=56194733).
+You will need to download data from
+[NLCD](https://www.mrlc.gov/data?f%5B0%5D=category%3AFractional%20Impervious%20Surface/)
+or from our backup version on
+[Figshare](https://figshare.com/articles/dataset/urbanr_data_Annual_NLCD_FctImp_2024/29549666?file=56194733).
 
-## Example
+## Usage
 
-This is a basic example to get percent impervious values from latitude and longitude coordinates. This function will also give you instructions if data is missing.
+This is a basic example to get percent impervious values from latitude
+and longitude coordinates. This function will also give you instructions
+if data is missing.
 
 ``` r
 library(urbanr)
@@ -32,4 +40,15 @@ coords_df <- data.frame(
 get_pct_impervious(coords_df)
 ```
 
-See an example of implementation at: https://github.com/BioDIGS/site_metadata_environment.
+# See Also
+
+See an example of implementation at:
+<https://github.com/BioDIGS/site_metadata_environment>.
+
+<!-- # Dev usage -->
+<!-- document() -->
+<!-- load_all() -->
+<!-- build_readme() -->
+<!-- urlchecker::url_check() -->
+<!-- test() -->
+<!-- check() -->
